@@ -16,6 +16,14 @@ fun Route.dataSearch(){
     Dataconn.conn()
     val conn: Connection = Dataconn.conn!!
 
+    /**
+     * git test 2025.01.06
+     *
+     *
+     */
+
+
+
 
 // SerializationFeature.INDENT_OUTPUT 활성화
     objectMapper.enable(SerializationFeature.INDENT_OUTPUT)
