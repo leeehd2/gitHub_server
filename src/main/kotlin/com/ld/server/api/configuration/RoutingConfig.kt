@@ -1,4 +1,4 @@
-package com.example.api.configuration
+package com.ld.server.api.configuration
 
 import com.ld.server.api.router.dataSearch
 import com.ld.server.api.router.productRouter

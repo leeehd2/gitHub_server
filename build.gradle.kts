@@ -1,3 +1,5 @@
+
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val ktorVersion: String by project
@@ -17,7 +19,6 @@ plugins {
 	id("org.jlleitschuh.gradle.ktlint") version "11.5.0"
 	id("com.google.cloud.tools.jib") version "3.3.1"
 
-
 }
 
 
@@ -28,6 +29,7 @@ repositories {
 	maven {
 		url = uri("https://plugins.gradle.org/m2/")
 	}
+
 }
 
 tasks.withType<KotlinCompile> {
@@ -38,12 +40,25 @@ tasks.withType<KotlinCompile> {
 }
 
 
-kotlin {
-	jvmToolchain {
-		val javaVersion = JavaVersion.VERSION_17.toString()
-		languageVersion.set(JavaLanguageVersion.of(javaVersion))
+tasks.withType<Jar> {
+	manifest {
+		attributes["Main-Class"] = "com.ld.server.ServerApplicationKt"
 	}
+
 }
+
+
+
+application {
+	mainClass.set("com.ld.server.SeverApplicationKt")
+}
+
+//kotlin {
+//	jvmToolchain {
+//		val javaVersion = JavaVersion.VERSION_17.toString()
+//		languageVersion.set(JavaLanguageVersion.of(javaVersion))
+//	}
+//}
 
 // or alternatively
 kotlin {
@@ -52,10 +67,24 @@ kotlin {
 	}
 }
 
-// After Kotlin 1.7.20
-kotlin {
-	jvmToolchain(21)
+
+
+tasks {
+	named<ShadowJar>("shadowJar") {
+		manifest {
+			attributes(
+				"Main-Class" to "com.ld.server.ServerApplicationKt",
+				"Multi-Release" to true
+			)
+		}
+	}
 }
+
+
+// After Kotlin 1.7.20
+////kotlin {
+	//jvmToolchain(21)
+//}
 //kotlin {
 //    jvmToolchain(18)
 //}
@@ -63,7 +92,7 @@ kotlin {
 group = "com.ld.server"
 version = "0.0.1"
 application {
-	mainClass.set("com.ld.server.Application")
+	mainClass.set("com.ld.server.ServerApplicationKt")
 
 	val isDevelopment: Boolean = project.ext.has("development")
 	applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
@@ -74,6 +103,8 @@ repositories {
 	mavenCentral()
 	gradlePluginPortal()
 }
+
+
 
 dependencies {
 	implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
@@ -138,8 +169,5 @@ dependencies {
 
 }
 
-application {
-	mainClass.set("Application")
-}
 
 

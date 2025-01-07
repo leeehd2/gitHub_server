@@ -5,29 +5,21 @@ package com.ld.server
 //import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 
 //import androidx.lifecycle.lifecycleScope
-import com.example.api.configuration.configureRouters
+//import com.ld.server.api.configuration.configureRouters
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.ld.server.api.configuration.configureAuthentication
 import com.ld.server.api.configuration.configureExceptionHandling
-//import com.ld.server.api.configuration.configureRouters
+import com.ld.server.api.configuration.configureRouters
 import com.ld.server.api.configuration.configureSwagger
 import com.ld.server.api.router.Person
 import com.ld.server.core.configuration.configureDependencyInjection
 import com.ld.server.core.configuration.configureLogging
 import com.ld.server.core.configuration.configureSerialization
 import com.ld.server.work.DatabaseCon
-import com.ld.server.work.DatabaseCon.*
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.engine.cio.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
 import io.ktor.server.application.Application
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import kotlinx.coroutines.*
 import java.sql.Connection
 import java.sql.ResultSet
 
@@ -134,8 +126,11 @@ fun test(conn : Connection ){
 	// 결과 출력
 	println("product=================")
 	while (resultSet.next()) {
-		println("product_ID: ${resultSet.getInt("product_id")}, product_Name: ${resultSet.getString("product_name")}")
+		//println("product_ID: ${resultSet.getInt("product_id")}, product_Name: ${resultSet.getString("product_name")}")
 	}
+	println("선임아.")
+	println("다이어트 ")
+	println("열심히 해라")
 
 	// 리소스 정리
 	resultSet.close()
