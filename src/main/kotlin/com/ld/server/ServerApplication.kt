@@ -131,7 +131,7 @@ fun test(conn : Connection ){
 	println("선임아.")
 	println("다이어트 ")
 	println("열심히 해라")
-
+//출력 수정
 	// 리소스 정리
 	resultSet.close()
 	statement.close()
