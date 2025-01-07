@@ -1,5 +1,5 @@
 
-
+# GITHUB 반영
 # 자주 사용하는 값 변수에 저장
 REPOSITORY=/home/ec2-user/gitHub_server
 PROJECT_NAME=server-all
