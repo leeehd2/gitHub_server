@@ -34,13 +34,13 @@ fun Route.dataSearch(){
         // 데이터 조회
         // 데이터 조회
         var statement = conn.createStatement()
-        var resultSet: ResultSet = statement.executeQuery("SELECT * FROM product  limit 100")
+        var resultSet: ResultSet = statement.executeQuery("SELECT * FROM product  limit 10")
 
         // 결과 출력
         println("product=================")
        var jsonString: String = ""
         while (resultSet.next()) {
-            println("product_ID: ${resultSet.getInt("product_id")}, product_Name: ${resultSet.getString("product_name")}")
+          //  println("product_ID: ${resultSet.getInt("product_id")}, product_Name: ${resultSet.getString("product_name")}")
             // 샘플 객체
             val person1 = Person1(resultSet.getInt("product_id").toString(), resultSet.getString("product_name"))
             personList.add(person1)
@@ -50,14 +50,24 @@ fun Route.dataSearch(){
 
 
 // 출력
-            println("=============>${jsonString}")
+           // println("=============>${jsonString}")
 
         }
 
 
+    //println("선임아.")
+    //println("다이어트 ")
+    //println("열심히 해라")
+    var jang: String = "선임아 "
+        jang += "다이어트 "
+        jang += "열심히 해라"
 
     get("/leedong"){
         call.respondText(jsonString)
+    }
+
+    get("/jang"){
+        call.respondText(jang)
     }
 
         // 리소스 정리

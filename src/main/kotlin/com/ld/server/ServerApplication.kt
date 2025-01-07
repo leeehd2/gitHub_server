@@ -128,9 +128,6 @@ fun test(conn : Connection ){
 	while (resultSet.next()) {
 		//println("product_ID: ${resultSet.getInt("product_id")}, product_Name: ${resultSet.getString("product_name")}")
 	}
-	println("선임아.")
-	println("다이어트 ")
-	println("열심히 해라")
 //출력 수정
 	// 리소스 정리
 	resultSet.close()
