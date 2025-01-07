@@ -39,7 +39,7 @@ else
 fi
 
 echo "> 새 애플리케이션 배포"
-JAR_NAME=$(ls -tr $REPOSITORY/ | grep jar | tail -n 1)
+JAR_NAME=$(ls -tr $JARDIR/ | grep jar | tail -n 1)
 
 echo "> Jar Name: $JAR_NAME"
 nohup java -jar $JARDIR/$JAR_NAME >>  $JARDIR/LOGS/server.log &
