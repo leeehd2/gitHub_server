@@ -55,9 +55,7 @@ fun Route.dataSearch(){
         }
 
 
-    //println("선임아.")
-    //println("다이어트 ")
-    //println("열심히 해라")
+
     var jang: String = "선임아 "
         jang += "다이어트 "
         jang += "열심히 해라"
