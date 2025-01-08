@@ -16,58 +16,63 @@ fun Route.dataSearch(){
     Dataconn.conn()
     val conn: Connection = Dataconn.conn!!
 
+    /**
+     * git test 2025.01.06
+     *
+     *
+     */
+
+
+
 
 // SerializationFeature.INDENT_OUTPUT 활성화
     objectMapper.enable(SerializationFeature.INDENT_OUTPUT)
 
     val personList = mutableListOf<Person1>()
 
-        println("test=================")
-        // 데이터 조회
-        // 데이터 조회
-        var statement = conn.createStatement()
-        var resultSet: ResultSet = statement.executeQuery("SELECT * FROM product  limit 100")
+    println("test=================")
+    // 데이터 조회
+    // 데이터 조회
+    var statement = conn.createStatement()
+    var resultSet: ResultSet = statement.executeQuery("SELECT * FROM product  limit 10")
 
-        // 결과 출력
-        println("product=================")
-       var jsonString: String = ""
-        while (resultSet.next()) {
-            println("product_ID: ${resultSet.getInt("product_id")}, product_Name: ${resultSet.getString("product_name")}")
-            // 샘플 객체
-            val person1 = Person1(resultSet.getInt("product_id").toString(), resultSet.getString("product_name"))
-            personList.add(person1)
+    // 결과 출력
+    println("product=================")
+    var jsonString: String = ""
+    while (resultSet.next()) {
+        //  println("product_ID: ${resultSet.getInt("product_id")}, product_Name: ${resultSet.getString("product_name")}")
+        // 샘플 객체
+        val person1 = Person1(resultSet.getInt("product_id").toString(), resultSet.getString("product_name"))
+        personList.add(person1)
 // 객체를 JSON 문자열로 변환
-             jsonString = objectMapper.writeValueAsString(personList)
+        jsonString = objectMapper.writeValueAsString(personList)
 
 
 
 // 출력
-            println("=============>${jsonString}")
+        // println("=============>${jsonString}")
 
-        }
+    }
 
 
+
+    var jang: String = "선임아 "
+    jang += "다이어트 "
+    jang += "열심히 해라"
 
     get("/leedong"){
         call.respondText(jsonString)
     }
 
-        // 리소스 정리
-        resultSet.close()
-        statement.close()
-        conn.close()
-/*
-    routing {
-
-        // 기본 라우트
-        get("/") {
-            // sendPostRequest()
-            call.respondText("Welcome to the home page!")
-        }
-    }
+    get("/jang"){
+        call.respondText(jang)
     }
 
-*/
+    // 리소스 정리
+    resultSet.close()
+    statement.close()
+    conn.close()
+
 
 
 }
@@ -75,10 +80,3 @@ fun Route.dataSearch(){
 
 internal class Person1 // 생성자, getter, setter
     (var name: String, var age: String)
-
-
-
-
-
-
-

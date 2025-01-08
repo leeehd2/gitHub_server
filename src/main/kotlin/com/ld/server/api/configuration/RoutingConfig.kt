@@ -1,5 +1,6 @@
-package com.example.api.configuration
+package com.ld.server.api.configuration
 
+import com.ld.server.api.router.UserSearch
 import com.ld.server.api.router.dataSearch
 import com.ld.server.api.router.productRouter
 import com.ld.server.api.router.systemRouter
@@ -17,6 +18,7 @@ fun Route.customRouters() {
     userRouter()
     productRouter()
     dataSearch()
+    UserSearch()
 }
 
 fun Application.configureRouters() {

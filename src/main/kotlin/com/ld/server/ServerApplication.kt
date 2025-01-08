@@ -5,11 +5,12 @@ package com.ld.server
 //import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 
 //import androidx.lifecycle.lifecycleScope
-import com.example.api.configuration.configureRouters
+import com.ld.server.api.configuration.configureRouters
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.ld.server.api.configuration.configureAuthentication
 import com.ld.server.api.configuration.configureExceptionHandling
+import com.ld.server.api.configuration.configureRouters
 //import com.ld.server.api.configuration.configureRouters
 import com.ld.server.api.configuration.configureSwagger
 import com.ld.server.api.router.Person

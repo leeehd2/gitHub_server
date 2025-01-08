@@ -7,6 +7,7 @@ import com.ld.server.api.dto.UpdateUserInfoRequest
 import com.ld.server.api.util.RequestUtils.getEntityId
 import com.ld.server.api.util.SwaggerUtils.internalServerError
 import com.ld.server.api.util.SwaggerUtils.notFound
+import com.ld.server.domain.model.User
 import com.ld.server.domain.service.UserService
 import io.github.smiley4.ktorswaggerui.dsl.routing.get
 import io.github.smiley4.ktorswaggerui.dsl.routing.post
@@ -25,6 +26,16 @@ val userTags = listOf("User")
 fun Route.userRouter() {
     val userService: UserService by inject()
     println("userTags=====$userService")
+
+    // POST 요청 처리
+    post("/users") {
+
+        val user = call.receive<User>()
+       // val createdUser = createUser(user)
+       // call.respond(HttpStatusCode.Created, createdUser)
+    }
+
+
     post("/users", {
         println("users=====")
         tags = userTags
