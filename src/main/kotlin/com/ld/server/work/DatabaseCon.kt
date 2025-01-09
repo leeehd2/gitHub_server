@@ -22,8 +22,6 @@ open class DatabaseCon() {
         println("username1=2===$username1")
         println("password1=3===$password1")
         conn = DriverManager.getConnection(jdbcUrl1, username1, password1)
-        println("jdbcUrl1==0==$jdbcUrl1")
-        println("username1=2===$username1")
-        println("password1=3===$password1")
+
     }
 }

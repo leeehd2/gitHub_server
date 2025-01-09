@@ -14,6 +14,8 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun Application.configureDatabase() {
+
+    println("configureDatabase=========================")
     connectDatabase()
    // if (isResetTables()) dropAndCreateTables()
 
@@ -96,8 +98,8 @@ object DatabaseUtils {
     }
 
     fun dropAndCreateTables() = transaction {
-        SchemaUtils.drop(*tables)
-        SchemaUtils.create(*tables)
+        //SchemaUtils.drop(*tables)
+        //SchemaUtils.create(*tables)
         log.info("${tables.size} tables are successfully dropped and created.")
 
        Users.insert {
