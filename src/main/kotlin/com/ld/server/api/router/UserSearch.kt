@@ -45,10 +45,10 @@ import java.sql.ResultSet
                 while (resultSet.next()) {
                       println("mem_ID: ${resultSet.getInt("mem_id")}")
                     // 샘플 객체
-                    val user = Person1(resultSet.getString("mem_id"), resultSet.getString("mem_name"))
+                    val user1 = user(resultSet.getInt("mem_id"), resultSet.getString("mem_name"))
 
 // 객체를 JSON 문자열로 변환
-                    jsonString = objectMapper.writeValueAsString(user)
+                    jsonString = objectMapper.writeValueAsString(user1)
                     println("=============>${jsonString}")
                     //call.respond(resultSet.getString("mem_id"))
                     call.respondText(jsonString)
@@ -73,7 +73,7 @@ import java.sql.ResultSet
 
 @Serializable
 internal data class user // 생성자, getter, setter
-    (var userid: String, var password: String)
+    (var memId: Int, var memName: String)
 
 
 
