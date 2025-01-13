@@ -49,12 +49,12 @@ import java.sql.ResultSet
 
 // 객체를 JSON 문자열로 변환
                     jsonString = objectMapper.writeValueAsString(user)
-
+                    println("=============>${jsonString}")
                     //call.respond(resultSet.getString("mem_id"))
                     call.respondText(jsonString)
 
 // 출력
-                    // println("=============>${jsonString}")
+
 
                 }
 
