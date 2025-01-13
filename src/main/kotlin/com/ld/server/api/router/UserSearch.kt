@@ -39,18 +39,19 @@ import java.sql.ResultSet
                 // 데이터 조회
 
                 var statement = conn.createStatement()
-                var resultSet: ResultSet = statement.executeQuery("SELECT mem_id FROM dongdb.member_tb where mem_id = '${userid}' and password = '${password}' ")
+                var resultSet: ResultSet = statement.executeQuery("SELECT mem_id , mem_name FROM dongdb.member_tb where mem_id = '${userid}' and password = '${password}' ")
 
                 var jsonString: String = ""
                 while (resultSet.next()) {
                       println("mem_ID: ${resultSet.getInt("mem_id")}")
                     // 샘플 객체
-                   // val user = Person1(resultSet.getString("user_id"), resultSet.getString("enc_password"))
+                    val user = Person1(resultSet.getString("mem_id"), resultSet.getString("mem_name"))
 
 // 객체를 JSON 문자열로 변환
-                  //  jsonString = objectMapper.writeValueAsString(user)
+                    jsonString = objectMapper.writeValueAsString(user)
 
-                    call.respond(resultSet.getString("mem_id"))
+                    //call.respond(resultSet.getString("mem_id"))
+                    call.respondText(jsonString)
 
 // 출력
                     // println("=============>${jsonString}")

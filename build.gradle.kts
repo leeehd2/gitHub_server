@@ -164,6 +164,9 @@ dependencies {
 	implementation("io.ktor:ktor-server-auth-jwt:2.3.4")
 //	implementation("androidx.lifecycl:lifecycle-runtime-ktx:2.3.1")
 //	implementation("androidx.core:1.15.0")
+	// Retrofit
+	implementation("com.squareup.retrofit2:retrofit:2.9.0")
+	implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
 
 
