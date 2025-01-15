@@ -106,7 +106,7 @@ import java.sql.ResultSet
             // 데이터 조회
 
             var statement = conn.createStatement()
-            var resultSet: ResultSet =
+           // var resultSet: ResultSet =
                 statement.executeQuery("insert into dongdb.member_tb(mem_name,password,email) values('${memName}','${password}','${email}')")
 /*
             var jsonString: String = ""
