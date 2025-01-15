@@ -77,11 +77,9 @@ import java.sql.ResultSet
         }
 
 
-fun Route.UsersSignUp() {
         post("/UsersSignUp") {
             println("users=====")
            // println("usersSignUp=====$userService")
-
 
             println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22")
             val params= call.receiveParameters()
@@ -101,7 +99,6 @@ fun Route.UsersSignUp() {
             Dataconn.conn()
             val conn: Connection = Dataconn.conn!!
 
-            }
         }
     }
 
