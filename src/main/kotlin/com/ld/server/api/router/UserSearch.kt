@@ -64,15 +64,17 @@ import java.sql.ResultSet
                 //call.respond(resultSet.getString("mem_id"))
                 // 리소스 정리
 
-
+            }
                 call.respondText(jsonString)
+
+
                 resultSet.close()
                 statement.close()
                 conn.close()
 // 출력
 
 
-            }
+
 
 
 
