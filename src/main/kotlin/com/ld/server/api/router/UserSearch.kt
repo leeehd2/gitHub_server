@@ -3,10 +3,19 @@ package com.ld.server.api.router
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.ld.server.api.dto.GetProductRequest
+import com.ld.server.api.dto.SignUpUserRequest
+import com.ld.server.api.dto.UserSignUpRequest
+import com.ld.server.api.dto.UserSignUpResponse
 import com.ld.server.api.util.RequestUtils.getQueryParams
+import com.ld.server.api.util.SwaggerUtils.internalServerError
+import com.ld.server.domain.model.Products.description
 import com.ld.server.work.DatabaseCon
+import io.github.smiley4.ktorswaggerui.dsl.routing.post
+import io.ktor.client.engine.callContext
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
 import io.ktor.server.request.receive
+import io.ktor.server.request.receiveParameters
 import io.ktor.server.response.respond
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
@@ -15,57 +24,85 @@ import kotlinx.serialization.Serializable
 import java.sql.Connection
 import java.sql.ResultSet
 
-    fun Route.UserSearch(){
+    fun Route.UserSearch() {
         get("/users11") {
             println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22")
-            val userid=call.parameters["userid"]
-            val password=call.parameters["password"]
+            val userid = call.parameters["userid"]
+            val password = call.parameters["password"]
             //val user = call.receive<user>()
             //val params = call.getQueryParams<user>()
-           // call.receive<>()
+            // call.receive<>()
             println("1")
             val objectMapper = ObjectMapper()
             println("2")
             val Dataconn: DatabaseCon = DatabaseCon()
-                Dataconn.conn()
-                val conn: Connection = Dataconn.conn!!
+            Dataconn.conn()
+            val conn: Connection = Dataconn.conn!!
 
-                objectMapper.enable(SerializationFeature.INDENT_OUTPUT)
+            objectMapper.enable(SerializationFeature.INDENT_OUTPUT)
             println("4")
-                val personList = mutableListOf<Person1>()
+            val personList = mutableListOf<Person1>()
 
-                println("${userid}=========================${password}")
-                // 데이터 조회
-                // 데이터 조회
+            println("${userid}=========================${password}")
+            // 데이터 조회
+            // 데이터 조회
 
-                var statement = conn.createStatement()
-                var resultSet: ResultSet = statement.executeQuery("SELECT mem_id , mem_name FROM dongdb.member_tb where mem_id = '${userid}' and password = '${password}' ")
+            var statement = conn.createStatement()
+            var resultSet: ResultSet =
+                statement.executeQuery("SELECT mem_id , mem_name FROM dongdb.member_tb where mem_id = '${userid}' and password = '${password}' ")
 
-                var jsonString: String = ""
-                while (resultSet.next()) {
-                      println("mem_ID: ${resultSet.getInt("mem_id")}")
-                    // 샘플 객체
-                    val user1 = user(resultSet.getInt("mem_id"), resultSet.getString("mem_name"))
+            var jsonString: String = ""
+            while (resultSet.next()) {
+                println("mem_ID: ${resultSet.getInt("mem_id")}")
+                // 샘플 객체
+                val user1 = user(resultSet.getInt("mem_id"), resultSet.getString("mem_name"))
 
 // 객체를 JSON 문자열로 변환
-                    jsonString = objectMapper.writeValueAsString(user1)
-                    println("=============>${jsonString}")
-                    //call.respond(resultSet.getString("mem_id"))
-                    call.respondText(jsonString)
+                jsonString = objectMapper.writeValueAsString(user1)
+                println("=============>${jsonString}")
+                //call.respond(resultSet.getString("mem_id"))
+                call.respondText(jsonString)
 
 // 출력
 
 
-                }
+            }
 
-                // 리소스 정리
-                resultSet.close()
-                statement.close()
-                conn.close()
+            // 리소스 정리
+            resultSet.close()
+            statement.close()
+            conn.close()
 
 
+        }
+
+
+fun Route.UsersSignUp() {
+        post("/UsersSignUp") {
+            println("users=====")
+           // println("usersSignUp=====$userService")
+
+
+            println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22")
+            val params= call.receiveParameters()
+            val memName=params["memName"]?: "Unknown"
+            val password=params["password"]?: "Unknown"
+            val email=params["email"]?: "Unknown"
+            println("memName=====${memName}")
+            println("password=====${password}")
+            println("email=====${email}")
+            //val user = call.receive<user>()
+            //val params = call.getQueryParams<user>()
+            // call.receive<>()
+            println("1")
+            val objectMapper = ObjectMapper()
+            println("2")
+            val Dataconn: DatabaseCon = DatabaseCon()
+            Dataconn.conn()
+            val conn: Connection = Dataconn.conn!!
 
             }
+        }
     }
 
 
