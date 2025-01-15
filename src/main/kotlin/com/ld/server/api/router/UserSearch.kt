@@ -9,6 +9,7 @@ import com.ld.server.api.dto.UserSignUpRequest
 import com.ld.server.api.dto.UserSignUpResponse
 import com.ld.server.api.util.RequestUtils.getQueryParams
 import com.ld.server.api.util.SwaggerUtils.internalServerError
+import com.ld.server.domain.model.Orders.user
 import com.ld.server.domain.model.Products.description
 import com.ld.server.work.DatabaseCon
 import io.github.smiley4.ktorswaggerui.dsl.routing.post
@@ -62,6 +63,11 @@ import java.sql.ResultSet
                 jsonString = objectMapper.writeValueAsString(user1)
                 println("=============>${jsonString}")
                 //call.respond(resultSet.getString("mem_id"))
+                // 리소스 정리
+                resultSet.close()
+                statement.close()
+                conn.close()
+
                 call.respondText(jsonString)
 
 // 출력
@@ -69,10 +75,7 @@ import java.sql.ResultSet
 
             }
 
-            // 리소스 정리
-            resultSet.close()
-            statement.close()
-            conn.close()
+
 
 
         }
@@ -81,8 +84,9 @@ import java.sql.ResultSet
 
         post("/usersSignUp") {
             println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22")
-            val userid = call.parameters["userid"]
+            val memName = call.parameters["memName"]
             val password = call.parameters["password"]
+            val email = call.parameters["email"]
             //val user = call.receive<user>()
             //val params = call.getQueryParams<user>()
             // call.receive<>()
@@ -97,35 +101,33 @@ import java.sql.ResultSet
             println("4")
             val personList = mutableListOf<Person1>()
 
-            println("${userid}=========================${password}")
+            println("${memName}=========================${password}")
             // 데이터 조회
             // 데이터 조회
 
             var statement = conn.createStatement()
             var resultSet: ResultSet =
-                statement.executeQuery("SELECT mem_id , mem_name FROM dongdb.member_tb where mem_id = '${userid}' and password = '${password}' ")
-
+                statement.executeQuery("insert into dongdb.member_tb(mem_name,password,email) values('${memName}','${password}','${email}')")
+/*
             var jsonString: String = ""
             while (resultSet.next()) {
                 println("mem_ID: ${resultSet.getInt("mem_id")}")
                 // 샘플 객체
                 val user1 = user(resultSet.getInt("mem_id"), resultSet.getString("mem_name"))
-
+*/
 // 객체를 JSON 문자열로 변환
-                jsonString = objectMapper.writeValueAsString(user1)
-                println("=============>${jsonString}")
-                //call.respond(resultSet.getString("mem_id"))
-                call.respondText(jsonString)
 
-// 출력
-
-
-            }
-
-            // 리소스 정리
-            resultSet.close()
             statement.close()
             conn.close()
+            call.respondText("성공")
+
+
+
+
+          //}
+
+            // 리소스 정리
+
 
 
         }
