@@ -79,7 +79,7 @@ import java.sql.ResultSet
 
 
 
-        get("/usersSignUp") {
+        post("/usersSignUp1") {
             println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22")
             val userid = call.parameters["userid"]
             val password = call.parameters["password"]

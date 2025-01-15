@@ -47,6 +47,26 @@ fun Route.userRouter() {
         call.respond(response)
     }
 
+
+    post("/usersSignUp", {
+        println("users=====")
+        tags = userTags
+        description = "create user"
+        request {
+            body<SignUpUserRequest>()
+        }
+        response {
+            HttpStatusCode.OK to {
+                body<LoginUserResponse>()
+            }
+            HttpStatusCode.InternalServerError to internalServerError()
+        }
+    }) {
+        val requestBody = call.receive<SignUpUserRequest>()
+        val response = userService.signUp(requestBody)
+        call.respond(response)
+    }
+
     get("/users/{id}", {
         tags = userTags
         description = "get user"
