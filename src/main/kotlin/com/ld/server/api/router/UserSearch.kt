@@ -104,10 +104,12 @@ import java.sql.ResultSet
             println("${memName}=========================${password}")
             // 데이터 조회
             // 데이터 조회
-
+            var cnt : Int? = 0
             var statement = conn.createStatement()
            // var resultSet: ResultSet =
-                statement.executeQuery("insert into dongdb.member_tb(mem_name,password,email) values('${memName}','${password}','${email}')")
+              cnt =  statement.executeUpdate("insert into dongdb.member_tb(mem_name,password,email) values('${memName}','${password}','${email}')")
+
+            println("${cnt}=========================")
 /*
             var jsonString: String = ""
             while (resultSet.next()) {
