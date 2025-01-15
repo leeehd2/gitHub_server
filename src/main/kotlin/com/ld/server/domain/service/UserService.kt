@@ -2,9 +2,11 @@ package com.ld.server.domain.service
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import com.ld.server.api.dto.SignUpUserRequest
 import com.ld.server.api.dto.GetUserResponse
 import com.ld.server.api.dto.LoginUserResponse
+import com.ld.server.api.dto.SignUpUserRequest
+import com.ld.server.api.dto.UserSignUpRequest
+import com.ld.server.api.router.user
 import com.ld.server.domain.model.User
 import com.ld.server.domain.model.UserRepository
 import io.ktor.server.plugins.BadRequestException
@@ -15,6 +17,37 @@ class UserService(
     private val jwtSecretKey: String,
     private val userRepository: UserRepository
 ) {
+    fun UserSignUp(
+        request: UserSignUpRequest
+    ): LoginUserResponse = transaction {
+        userRepository.findByEmailOrNull(request.email)?.let {
+            throw BadRequestException("duplicate email")
+        }
+        userRepository.findByNicknameOrNull(request.memName)?.let {
+            throw BadRequestException("duplicate nickname")
+        }
+
+
+        val member_tb = userRepository.save(
+            User.create(
+                nickname = request.memName,
+                email = request.email,
+                encPassword = request.password
+            )
+        )
+
+        val token = JWT.create()
+            .withClaim("userId", member_tb.id)
+            .withExpiresAt(Date(System.currentTimeMillis() + 60000))
+            .sign(Algorithm.HMAC256(jwtSecretKey))
+
+        return@transaction LoginUserResponse(
+            userId = member_tb.id,
+            accessToken = token
+        )
+    }
+
+
     fun signUp(
         request: SignUpUserRequest
     ): LoginUserResponse = transaction {
@@ -42,7 +75,6 @@ class UserService(
             accessToken = token
         )
     }
-
     fun getUser(id: Long): GetUserResponse {
         val user = userRepository.findById(id)
         return GetUserResponse(user)

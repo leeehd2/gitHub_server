@@ -118,7 +118,8 @@ dependencies {
 
 	implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-server-websockets-jvm:2.3.2")
-	testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
+    implementation("com.google.firebase:firebase-firestore-ktx:25.1.1")
+    testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
 	implementation("io.ktor:ktor-server-status-pages:$kotlinVersion")
 

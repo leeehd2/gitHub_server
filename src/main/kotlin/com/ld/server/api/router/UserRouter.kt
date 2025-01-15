@@ -4,6 +4,8 @@ import com.ld.server.api.dto.GetUserResponse
 import com.ld.server.api.dto.LoginUserResponse
 import com.ld.server.api.dto.SignUpUserRequest
 import com.ld.server.api.dto.UpdateUserInfoRequest
+import com.ld.server.api.dto.UserSignUpRequest
+import com.ld.server.api.dto.UserSignUpResponse
 import com.ld.server.api.util.RequestUtils.getEntityId
 import com.ld.server.api.util.SwaggerUtils.internalServerError
 import com.ld.server.api.util.SwaggerUtils.notFound
@@ -24,7 +26,28 @@ val userTags = listOf("User")
 
 fun Route.userRouter() {
     val userService: UserService by inject()
-    println("userTags=====$userService")
+
+    post("/UsersSignUp", {
+        println("users=====")
+        println("usersSignUp=====$userService")
+        tags = userTags
+        description = "insert user"
+        request {
+            body<UserSignUpRequest>()
+        }
+        response {
+            HttpStatusCode.OK to {
+                body<UserSignUpResponse>()
+            }
+            HttpStatusCode.InternalServerError to internalServerError()
+        }
+    }) {
+        val requestBody = call.receive<SignUpUserRequest>()
+        val response = userService.signUp(requestBody)
+        call.respond(response)
+    }
+
+
     post("/users", {
         println("users=====")
         tags = userTags

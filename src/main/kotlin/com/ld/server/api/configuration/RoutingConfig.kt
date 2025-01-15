@@ -16,8 +16,8 @@ import io.ktor.util.toMap
 
 fun Route.customRouters() {
     userRouter()
-    productRouter()
-    dataSearch()
+   // productRouter()
+   // dataSearch()
     UserSearch()
 }
 
@@ -34,8 +34,8 @@ fun Application.configureRouters() {
         trace {
             log.debug(it.call.request.headers.toMap().toString())
         }
-        systemRouter()
-        customRouters()
+      //  systemRouter()
+      //  customRouters()
 
     }
 }

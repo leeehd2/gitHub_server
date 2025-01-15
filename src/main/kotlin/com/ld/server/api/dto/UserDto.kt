@@ -2,6 +2,17 @@ package com.ld.server.api.dto
 
 import com.ld.server.domain.model.User
 
+data class UserSignUpRequest(
+    val memName: String,
+    val password: String,
+    val email: String
+) {
+    init {
+        // TODO: add email, password format validation
+    }
+}
+
+
 data class SignUpUserRequest(
     val nickname: String,
     val email: String,
@@ -35,6 +46,11 @@ data class UpdateUserInfoRequest(
 )
 
 data class LoginUserResponse(
+    val userId: Long,
+    val accessToken: String
+)
+
+data class UserSignUpResponse(
     val userId: Long,
     val accessToken: String
 )
