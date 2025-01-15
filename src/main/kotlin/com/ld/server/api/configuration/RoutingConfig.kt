@@ -1,9 +1,7 @@
 package com.ld.server.api.configuration
 
-import com.ld.server.api.router.UserSearch
+import com.ld.server.api.router.userSearch
 import com.ld.server.api.router.dataSearch
-import com.ld.server.api.router.productRouter
-import com.ld.server.api.router.systemRouter
 import com.ld.server.api.router.userRouter
 import com.ld.server.core.configuration.logger
 import io.github.smiley4.ktorswaggerui.routing.openApiSpec
@@ -18,7 +16,7 @@ fun Route.customRouters() {
     userRouter()
    // productRouter()
     dataSearch()
-    UserSearch()
+    userSearch()
 }
 
 fun Application.configureRouters() {

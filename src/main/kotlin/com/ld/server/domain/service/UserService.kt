@@ -17,35 +17,6 @@ class UserService(
     private val jwtSecretKey: String,
     private val userRepository: UserRepository
 ) {
-    fun UserSignUp(
-        request: UserSignUpRequest
-    ): LoginUserResponse = transaction {
-        userRepository.findByEmailOrNull(request.email)?.let {
-            throw BadRequestException("duplicate email")
-        }
-        userRepository.findByNicknameOrNull(request.memName)?.let {
-            throw BadRequestException("duplicate nickname")
-        }
-
-
-        val member_tb = userRepository.save(
-            User.create(
-                nickname = request.memName,
-                email = request.email,
-                encPassword = request.password
-            )
-        )
-
-        val token = JWT.create()
-            .withClaim("userId", member_tb.id)
-            .withExpiresAt(Date(System.currentTimeMillis() + 60000))
-            .sign(Algorithm.HMAC256(jwtSecretKey))
-
-        return@transaction LoginUserResponse(
-            userId = member_tb.id,
-            accessToken = token
-        )
-    }
 
 
     fun signUp(

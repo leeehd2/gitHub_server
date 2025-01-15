@@ -3,6 +3,7 @@ package com.ld.server.api.router
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.ld.server.api.dto.GetProductRequest
+import com.ld.server.api.dto.LoginUserResponse
 import com.ld.server.api.dto.SignUpUserRequest
 import com.ld.server.api.dto.UserSignUpRequest
 import com.ld.server.api.dto.UserSignUpResponse
@@ -24,7 +25,7 @@ import kotlinx.serialization.Serializable
 import java.sql.Connection
 import java.sql.ResultSet
 
-    fun Route.UserSearch() {
+    fun Route.userSearch() {
         get("/users11") {
             println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22")
             val userid = call.parameters["userid"]
@@ -77,18 +78,11 @@ import java.sql.ResultSet
         }
 
 
-        post("/UsersSignUp") {
-            println("users=====")
-           // println("usersSignUp=====$userService")
 
+        post("/usersSignUp") {
             println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22")
-            val params= call.receiveParameters()
-            val memName=params["memName"]?: "Unknown"
-            val password=params["password"]?: "Unknown"
-            val email=params["email"]?: "Unknown"
-            println("memName=====${memName}")
-            println("password=====${password}")
-            println("email=====${email}")
+            val userid = call.parameters["userid"]
+            val password = call.parameters["password"]
             //val user = call.receive<user>()
             //val params = call.getQueryParams<user>()
             // call.receive<>()
@@ -99,13 +93,48 @@ import java.sql.ResultSet
             Dataconn.conn()
             val conn: Connection = Dataconn.conn!!
 
+            objectMapper.enable(SerializationFeature.INDENT_OUTPUT)
+            println("4")
+            val personList = mutableListOf<Person1>()
+
+            println("${userid}=========================${password}")
+            // 데이터 조회
+            // 데이터 조회
+
+            var statement = conn.createStatement()
+            var resultSet: ResultSet =
+                statement.executeQuery("SELECT mem_id , mem_name FROM dongdb.member_tb where mem_id = '${userid}' and password = '${password}' ")
+
+            var jsonString: String = ""
+            while (resultSet.next()) {
+                println("mem_ID: ${resultSet.getInt("mem_id")}")
+                // 샘플 객체
+                val user1 = user(resultSet.getInt("mem_id"), resultSet.getString("mem_name"))
+
+// 객체를 JSON 문자열로 변환
+                jsonString = objectMapper.writeValueAsString(user1)
+                println("=============>${jsonString}")
+                //call.respond(resultSet.getString("mem_id"))
+                call.respondText(jsonString)
+
+// 출력
+
+
+            }
+
+            // 리소스 정리
+            resultSet.close()
+            statement.close()
+            conn.close()
+
+
         }
+
     }
 
 
 
 
-@Serializable
 internal data class user // 생성자, getter, setter
     (var memId: Int, var memName: String)
 

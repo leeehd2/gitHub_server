@@ -85,4 +85,6 @@ fun Route.userRouter() {
         val request = call.receive<UpdateUserInfoRequest>()
         call.respond(userService.updateUser(userId, request.nickname))
     }
+
+
 }
