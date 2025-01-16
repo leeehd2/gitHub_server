@@ -2,6 +2,7 @@ package com.ld.server.api.router
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
+import com.ld.server.domain.model.Orders.user
 import com.ld.server.work.DatabaseCon
 import io.github.smiley4.ktorswaggerui.dsl.routing.post
 import io.ktor.server.application.call
@@ -38,13 +39,15 @@ fun Route.userSearch() {
                 // 데이터 조회
 
                 var statement = conn.createStatement()
-                var resultSet: ResultSet = statement.executeQuery("SELECT mem_id , mem_name FROM dongdb.member_tb where mem_id = '${userid}' and password = '${password}' ")
+                var resultSet: ResultSet? = null
+
+                resultSet =  statement.executeQuery("SELECT mem_id , mem_name FROM dongdb.member_tb where mem_id = '${userid}' and password = '${password}' ")
 
                 var jsonString: String = ""
             try {
                 println("resultSet.isLast: ${resultSet.isBeforeFirst}")
 
-               // while (resultSet.isBeforeFirst) {
+                while (resultSet.next()) {
                     println("aaaa")
                     println("bbbbbb======${resultSet.fetchSize}")
                     println("mem_ID: ${resultSet.getInt("mem_id")}")
@@ -57,7 +60,7 @@ fun Route.userSearch() {
                     //call.respond(resultSet.getString("mem_id"))
                     // 리소스 정리
 
-              //  }
+               }
             } catch (e: Exception) {
                 println("try_catch=================${e.printStackTrace()}")
             }
