@@ -38,14 +38,15 @@ fun Route.userSearch() {
                 // 데이터 조회
 
                 var statement = conn.createStatement()
-                var resultSet: ResultSet =
-                    statement.executeQuery("SELECT mem_id , mem_name FROM dongdb.member_tb where mem_id = '${userid}' and password = '${password}' ")
+                var resultSet: ResultSet = statement.executeQuery("SELECT mem_id , mem_name FROM dongdb.member_tb where mem_id = '${userid}' and password = '${password}' ")
 
                 var jsonString: String = ""
             try {
                 println("resultSet.isLast: ${resultSet.isBeforeFirst}")
 
                 while (resultSet.isBeforeFirst) {
+                    println("aaaa")
+                    println("bbbbbb======${resultSet.fetchSize}")
                     println("mem_ID: ${resultSet.getInt("mem_id")}")
                     // 샘플 객체
                     val user1 = user(resultSet.getInt("mem_id"), resultSet.getString("mem_name"))
