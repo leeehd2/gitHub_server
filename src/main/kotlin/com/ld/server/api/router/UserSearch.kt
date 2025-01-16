@@ -39,7 +39,7 @@ fun Route.userSearch() {
 
             var jsonString: String = ""
 
-            println("resultSet.isLast: ${resultSet.isLast}")
+            println("resultSet.isLast: ${resultSet.isBeforeFirst}")
 
             // 샘플 객체
             val user1 = user(resultSet.getInt("mem_id"), resultSet.getString("mem_name"))
@@ -48,7 +48,7 @@ fun Route.userSearch() {
             jsonString = objectMapper.writeValueAsString(user1)
             println("1234=============>${jsonString}")
 
-            while (resultSet.isLast) {
+            while (resultSet.isBeforeFirst()) {
                 println("mem_ID: ${resultSet.getInt("mem_id")}")
                 // 샘플 객체
                 val user1 = user(resultSet.getInt("mem_id"), resultSet.getString("mem_name"))
