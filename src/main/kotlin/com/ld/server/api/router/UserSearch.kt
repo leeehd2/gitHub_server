@@ -2,7 +2,6 @@ package com.ld.server.api.router
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
-import com.ld.server.domain.model.Orders.user
 import com.ld.server.work.DatabaseCon
 import io.github.smiley4.ktorswaggerui.dsl.routing.post
 import io.ktor.server.application.call
@@ -45,13 +44,6 @@ fun Route.userSearch() {
                 var jsonString: String = ""
             try {
                 println("resultSet.isLast: ${resultSet.isBeforeFirst}")
-
-                // 샘플 객체
-                val user1 = user(resultSet.getInt("mem_id"), resultSet.getString("mem_name"))
-
-// 객체를 JSON 문자열로 변환
-                jsonString = objectMapper.writeValueAsString(user1)
-                println("1234=============>${jsonString}")
 
                 while (resultSet.isBeforeFirst) {
                     println("mem_ID: ${resultSet.getInt("mem_id")}")
