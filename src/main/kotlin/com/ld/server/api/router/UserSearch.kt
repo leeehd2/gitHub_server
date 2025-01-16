@@ -53,7 +53,7 @@ import java.sql.ResultSet
             var resultSet: ResultSet =  statement.executeQuery("SELECT mem_id , mem_name FROM dongdb.member_tb where mem_id = '${userid}' and password = '${password}' ")
 
             var jsonString: String = ""
-            while (resultSet.next()) {
+            while (resultSet.isLast) {
                 println("mem_ID: ${resultSet.getInt("mem_id")}")
                 // 샘플 객체
                 val user1 = user(resultSet.getInt("mem_id"), resultSet.getString("mem_name"))
