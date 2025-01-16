@@ -2,6 +2,7 @@ package com.ld.server.api.router
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
+import com.ld.server.domain.model.Orders.user
 import com.ld.server.work.DatabaseCon
 import io.github.smiley4.ktorswaggerui.dsl.routing.post
 import io.ktor.server.application.call
@@ -19,58 +20,64 @@ fun Route.userSearch() {
             //val user = call.receive<user>()
             //val params = call.getQueryParams<user>()
             // call.receive<>()
-            println("1")
-            val objectMapper = ObjectMapper()
-            println("2")
-            val Dataconn: DatabaseCon = DatabaseCon()
-            Dataconn.conn()
-            val conn: Connection = Dataconn.conn!!
 
-            objectMapper.enable(SerializationFeature.INDENT_OUTPUT)
-            println("4")
-            val personList = mutableListOf<Person1>()
 
-            println("${userid}=========================${password}")
-            // 데이터 조회
-            // 데이터 조회
 
-            var statement = conn.createStatement()
-            var resultSet: ResultSet =  statement.executeQuery("SELECT mem_id , mem_name FROM dongdb.member_tb where mem_id = '${userid}' and password = '${password}' ")
+                println("1")
+                val objectMapper = ObjectMapper()
+                println("2")
+                val Dataconn: DatabaseCon = DatabaseCon()
+                Dataconn.conn()
+                val conn: Connection = Dataconn.conn!!
 
-            var jsonString: String = ""
+                objectMapper.enable(SerializationFeature.INDENT_OUTPUT)
+                println("4")
+                val personList = mutableListOf<Person1>()
 
-            println("resultSet.isLast: ${resultSet.isBeforeFirst}")
+                println("${userid}=========================${password}")
+                // 데이터 조회
+                // 데이터 조회
 
-            // 샘플 객체
-            val user1 = user(resultSet.getInt("mem_id"), resultSet.getString("mem_name"))
+                var statement = conn.createStatement()
+                var resultSet: ResultSet =
+                    statement.executeQuery("SELECT mem_id , mem_name FROM dongdb.member_tb where mem_id = '${userid}' and password = '${password}' ")
 
-// 객체를 JSON 문자열로 변환
-            jsonString = objectMapper.writeValueAsString(user1)
-            println("1234=============>${jsonString}")
+                var jsonString: String = ""
+            try {
+                println("resultSet.isLast: ${resultSet.isBeforeFirst}")
 
-            while (resultSet.isBeforeFirst()) {
-                println("mem_ID: ${resultSet.getInt("mem_id")}")
                 // 샘플 객체
                 val user1 = user(resultSet.getInt("mem_id"), resultSet.getString("mem_name"))
 
 // 객체를 JSON 문자열로 변환
                 jsonString = objectMapper.writeValueAsString(user1)
-                println("=============>${jsonString}")
-                //call.respond(resultSet.getString("mem_id"))
-                // 리소스 정리
+                println("1234=============>${jsonString}")
 
+                while (resultSet.isBeforeFirst) {
+                    println("mem_ID: ${resultSet.getInt("mem_id")}")
+                    // 샘플 객체
+                    val user1 = user(resultSet.getInt("mem_id"), resultSet.getString("mem_name"))
+
+// 객체를 JSON 문자열로 변환
+                    jsonString = objectMapper.writeValueAsString(user1)
+                    println("=============>${jsonString}")
+                    //call.respond(resultSet.getString("mem_id"))
+                    // 리소스 정리
+
+                }
+            } catch (e: Exception) {
+                println("try_catch=================${e.printStackTrace()}")
             }
+
+
+
+
                 call.respondText(jsonString)
 
 
                 resultSet.close()
                 statement.close()
                 conn.close()
-// 출력
-
-
-
-
 
 
 
