@@ -2,31 +2,16 @@ package com.ld.server.api.router
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
-import com.ld.server.api.dto.GetProductRequest
-import com.ld.server.api.dto.LoginUserResponse
-import com.ld.server.api.dto.SignUpUserRequest
-import com.ld.server.api.dto.UserSignUpRequest
-import com.ld.server.api.dto.UserSignUpResponse
-import com.ld.server.api.util.RequestUtils.getQueryParams
-import com.ld.server.api.util.SwaggerUtils.internalServerError
-import com.ld.server.domain.model.Orders.user
-import com.ld.server.domain.model.Products.description
 import com.ld.server.work.DatabaseCon
 import io.github.smiley4.ktorswaggerui.dsl.routing.post
-import io.ktor.client.engine.callContext
-import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
-import io.ktor.server.request.receive
-import io.ktor.server.request.receiveParameters
-import io.ktor.server.response.respond
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
-import kotlinx.serialization.Serializable
 import java.sql.Connection
 import java.sql.ResultSet
 
-    fun Route.userSearch() {
+fun Route.userSearch() {
         get("/users11") {
             println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22")
             val userid = call.parameters["userid"]
