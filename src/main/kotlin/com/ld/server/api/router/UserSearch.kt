@@ -53,6 +53,16 @@ import java.sql.ResultSet
             var resultSet: ResultSet =  statement.executeQuery("SELECT mem_id , mem_name FROM dongdb.member_tb where mem_id = '${userid}' and password = '${password}' ")
 
             var jsonString: String = ""
+
+            println("resultSet.isLast: ${resultSet.isLast}")
+
+            // 샘플 객체
+            val user1 = user(resultSet.getInt("mem_id"), resultSet.getString("mem_name"))
+
+// 객체를 JSON 문자열로 변환
+            jsonString = objectMapper.writeValueAsString(user1)
+            println("1234=============>${jsonString}")
+
             while (resultSet.isLast) {
                 println("mem_ID: ${resultSet.getInt("mem_id")}")
                 // 샘플 객체
