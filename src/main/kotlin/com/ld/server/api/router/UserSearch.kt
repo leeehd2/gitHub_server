@@ -44,7 +44,7 @@ fun Route.userSearch() {
             try {
                 println("resultSet.isLast: ${resultSet.isBeforeFirst}")
 
-                while (resultSet.isBeforeFirst) {
+               // while (resultSet.isBeforeFirst) {
                     println("aaaa")
                     println("bbbbbb======${resultSet.fetchSize}")
                     println("mem_ID: ${resultSet.getInt("mem_id")}")
@@ -57,7 +57,7 @@ fun Route.userSearch() {
                     //call.respond(resultSet.getString("mem_id"))
                     // 리소스 정리
 
-                }
+              //  }
             } catch (e: Exception) {
                 println("try_catch=================${e.printStackTrace()}")
             }
